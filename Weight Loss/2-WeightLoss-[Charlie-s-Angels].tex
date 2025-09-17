@@ -1,0 +1,394 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Weight Loss},
+  pdfauthor={Charlie's Angels},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Weight Loss}
+\author{Charlie's Angels}
+\date{2024-05-29}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{knitr}\SpecialCharTok{::}\NormalTok{opts\_chunk}\SpecialCharTok{$}\FunctionTok{set}\NormalTok{(}\AttributeTok{warning =} \ConstantTok{FALSE}\NormalTok{, }\AttributeTok{message =} \ConstantTok{FALSE}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{A. Gym as a factor in Weight
+Loss}\label{a.-gym-as-a-factor-in-weight-loss}
+
+Question \#1: On the average, which Gym has individuals with higher
+weight loss?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(readr)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(rstatix)}
+\FunctionTok{library}\NormalTok{(tinytex)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\NormalTok{typediet }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"A"}\NormalTok{, }\StringTok{"B"}\NormalTok{, }\StringTok{"C"}\NormalTok{)}
+\NormalTok{typegym }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"Pewter"}\NormalTok{, }\StringTok{"Cerulean"}\NormalTok{)}
+
+
+\NormalTok{WEIGHTLOSS }\OtherTok{\textless{}{-}} \FunctionTok{read\_csv}\NormalTok{(}\StringTok{"WeightLoss.csv"}\NormalTok{, }
+                       \AttributeTok{col\_types =} \FunctionTok{cols}\NormalTok{(}\AttributeTok{Diet =} \FunctionTok{col\_factor}\NormalTok{(}\AttributeTok{levels =}\NormalTok{ typediet), }
+                                        \AttributeTok{Gym =} \FunctionTok{col\_factor}\NormalTok{(}\AttributeTok{levels =}\NormalTok{ typegym)}
+\NormalTok{                                       )}
+\NormalTok{                      )}
+\FunctionTok{head}\NormalTok{(WEIGHTLOSS)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 5
+##   MemberID   Age Diet  Gym      WeightLoss
+##      <dbl> <dbl> <fct> <fct>         <dbl>
+## 1        1    35 A     Cerulean       5.74
+## 2        2    29 C     Cerulean       7.36
+## 3        3    27 B     Pewter         7.17
+## 4        4    23 C     Pewter        11.9 
+## 5        5    26 B     Pewter         8.78
+## 6        6    32 B     Cerulean       5.52
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_gym }\OtherTok{\textless{}{-}}\NormalTok{ WEIGHTLOSS }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gym) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_value =} \FunctionTok{mean}\NormalTok{(WeightLoss, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{))}
+\NormalTok{mean\_gym}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 2
+##   Gym      mean_value
+##   <fct>         <dbl>
+## 1 Pewter         8.01
+## 2 Cerulean       6.04
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(WEIGHTLOSS, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Gym, }\AttributeTok{y =}\NormalTok{ WeightLoss, }\AttributeTok{fill =}\NormalTok{ Gym)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_boxplot}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Weight Loss by Diet"}\NormalTok{, }\AttributeTok{x =} \StringTok{"Gym"}\NormalTok{, }\AttributeTok{y =} \StringTok{"Weight Lost (in kg)"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{2-WeightLoss-\%5BCharlie-s-Angels\%5D_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+\textbf{Answer: On average, Pewter gym has individuals with higher
+weight loss}
+
+Question \#2: At 0.05 level of significance, is there a difference in
+the average weight loss between the members of the two Gyms? Test for
+assumptions before performing the T test for means.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(rstatix)}
+\FunctionTok{library}\NormalTok{(tidyverse)}
+
+\NormalTok{WL2 }\OtherTok{\textless{}{-}} \FunctionTok{subset}\NormalTok{(WEIGHTLOSS, Gym }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\StringTok{"Pewter"}\NormalTok{, }\StringTok{"Cerulean"}\NormalTok{))}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{select}\NormalTok{(WeightLoss, Gym)}\SpecialCharTok{|\textgreater{}}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Gym =} \FunctionTok{as.factor}\NormalTok{(Gym))}
+\NormalTok{WL2}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 60 x 2
+##    WeightLoss Gym     
+##         <dbl> <fct>   
+##  1       5.74 Cerulean
+##  2       7.36 Cerulean
+##  3       7.17 Pewter  
+##  4      11.9  Pewter  
+##  5       8.78 Pewter  
+##  6       5.52 Cerulean
+##  7      10.2  Pewter  
+##  8       7.77 Cerulean
+##  9       7.79 Pewter  
+## 10       5.49 Cerulean
+## # i 50 more rows
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{shapiro.test}\NormalTok{(WL2}\SpecialCharTok{$}\NormalTok{WeightLoss)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Shapiro-Wilk normality test
+## 
+## data:  WL2$WeightLoss
+## W = 0.97623, p-value = 0.2902
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{summary\_gym }\OtherTok{\textless{}{-}}\NormalTok{ WL2}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Gym)}\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\FunctionTok{shapiro\_test}\NormalTok{(WeightLoss))}
+\NormalTok{summary\_gym}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 2 x 4
+##   Gym      variable   statistic p.value
+##   <fct>    <chr>          <dbl>   <dbl>
+## 1 Pewter   WeightLoss     0.967   0.468
+## 2 Cerulean WeightLoss     0.958   0.282
+\end{verbatim}
+
+\emph{The weight loss data from the 2 gyms follows a normal distribution
+since the p-values of the 2 gyms are greater than 0.05}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{t.test}\NormalTok{(WeightLoss }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Gym, WL2,}
+       \AttributeTok{var.equal =}\NormalTok{ F,}
+       \AttributeTok{alternative =} \StringTok{"two.sided"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##  Welch Two Sample t-test
+## 
+## data:  WeightLoss by Gym
+## t = 4.333, df = 43.356, p-value = 8.58e-05
+## alternative hypothesis: true difference in means between group Pewter and group Cerulean is not equal to 0
+## 95 percent confidence interval:
+##  1.050836 2.879830
+## sample estimates:
+##   mean in group Pewter mean in group Cerulean 
+##               8.009333               6.044000
+\end{verbatim}
+
+\textbf{Answer: At 0.05 level of significance, we have sufficient
+evidence to conclude that the average weight loss between the members of
+the 2 gyms are not equal}
+
+\section{B. Diet as a factor in Weight
+Loss}\label{b.-diet-as-a-factor-in-weight-loss}
+
+Question \#3: Obtain mean of WeightLoss per Diet. Which types of diet
+have greater mean weight loss than the overall mean weight loss? Which
+types of diet have less mean weight loss than the overall mean weight
+loss?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_diet }\OtherTok{\textless{}{-}}\NormalTok{ WEIGHTLOSS }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Diet) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{mean\_diet =} \FunctionTok{mean}\NormalTok{(WeightLoss))}
+\NormalTok{mean\_diet}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   Diet  mean_diet
+##   <fct>     <dbl>
+## 1 A          5.82
+## 2 B          7.05
+## 3 C          8.21
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{OVmean }\OtherTok{\textless{}{-}}\NormalTok{ WEIGHTLOSS }\SpecialCharTok{\%\textgreater{}\%} 
+          \FunctionTok{summarize}\NormalTok{(}\AttributeTok{OVmean =} \FunctionTok{mean}\NormalTok{(WeightLoss))}
+\NormalTok{OVmean}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 1
+##   OVmean
+##    <dbl>
+## 1   7.03
+\end{verbatim}
+
+\textbf{Answer: Among the three diets, Diet B \& C has greater mean than
+the overall mean weight loss. On the other hand, Diet A is the only diet
+that has less mean weight loss than the overall mean weight loss.}
+
+Question \#4: Perform a one-way ANOVA of WeightLoss with the type of
+diet as the grouping variable. Check first if assumptions are met.
+Interpret the result.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Test for Normality}
+\NormalTok{WEIGHTLOSS }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{group\_by}\NormalTok{(Diet) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\FunctionTok{shapiro\_test}\NormalTok{(WeightLoss))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 4
+##   Diet  variable   statistic p.value
+##   <fct> <chr>          <dbl>   <dbl>
+## 1 A     WeightLoss     0.971 0.768  
+## 2 B     WeightLoss     0.971 0.781  
+## 3 C     WeightLoss     0.854 0.00626
+\end{verbatim}
+
+\emph{The third group has a p-value \textless{} 0.05, violating the
+assumption of normality. We proceed with testing for homoscedasticity.
+We proceed to Levene's Test for Homoscedasticity}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\#Test for Homoscedasticity}
+\FunctionTok{levene\_test}\NormalTok{( WEIGHTLOSS, WeightLoss }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Diet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 1 x 4
+##     df1   df2 statistic     p
+##   <int> <int>     <dbl> <dbl>
+## 1     2    57    0.0261 0.974
+\end{verbatim}
+
+\emph{Since the p-value is \textgreater{} 0.05, we do not reject the
+null hypothesis. At 0.05 level of significance, we have sufficient
+evidence to conclude that the variances are equal.}
+
+We proceed with performing one-way ANOVA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{anova\_diet }\OtherTok{\textless{}{-}} \FunctionTok{aov}\NormalTok{(WeightLoss }\SpecialCharTok{\textasciitilde{}}\NormalTok{ Diet, WEIGHTLOSS)}
+\FunctionTok{summary}\NormalTok{(anova\_diet)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##             Df Sum Sq Mean Sq F value   Pr(>F)    
+## Diet         2  57.45  28.727   9.124 0.000365 ***
+## Residuals   57 179.47   3.149                     
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+\end{verbatim}
+
+\textbf{Answer: Since the p-value is \textless{} 0.05, we reject the
+null hypothesis. At 0.05 level of significance, we have sufficient
+evidence to conclude that at least one of the means of the 3 diets is
+different from the rest.}
+
+\end{document}

@@ -120,3 +120,4 @@ summary(anova_diet)
 ```
 
 **Answer: Since the p-value is \< 0.05, we reject the null hypothesis. At 0.05 level of significance, we have sufficient evidence to conclude that at least one of the means of the 3 diets is different from the rest.**
+

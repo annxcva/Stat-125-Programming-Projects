@@ -1,0 +1,119 @@
+---
+title: "1 Fraud"
+author: "Charlie's Angels"
+date: "2024-05-18"
+output:
+  pdf_document: default
+  html_document: default
+---
+```{r}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+Libraries to be used:
+```{r}
+library(readr)
+library(tidyr)
+library(dplyr)
+library(lubridate)
+library(ggplot2)
+library(magrittr)
+library(data.table)
+```
+
+## A. Importing Fraud Data
+
+```{r}
+read_fraud <- function(folder = getwd()) {
+  files <- list.files(path = folder, pattern = "*.csv", full.names = TRUE)
+  transactions_list <- lapply(files, fread)
+  transactions <- bind_rows(transactions_list) 
+  transactions <- transactions %>%
+    mutate(
+      CardType = as.factor(CardType),
+      Fraud = as.factor(Fraud)) %>%
+    select(TimeStamp, CardType, Amount, Fraud)
+return(transactions)
+}
+
+#Input your directory here (to verify)
+transactions <- read_fraud("C:/Users/amore_6ou078y/OneDrive/Documents/UP Subjects/Stat 125/R/Fraud Data")
+head(transactions)
+
+```
+
+------------------------------------------------------------------------
+
+## B. Single Line Codes
+
+```{r}
+
+loss_tally <- filter(.data = transactions, Fraud == "Yes") %>% summarise(Sum = sum(Amount))
+loss_tally
+
+```
+
+### 1. For the whole year of 2023, how much did the bank lose due to fraud transactions?
+
+-   *39,465,197* pesos lost due to fraud transactions.
+
+------------------------------------------------------------------------
+
+```{r}
+
+date_transactions <- filter(.data = transactions, Fraud == "Yes") %>%
+  mutate(Date = as.Date(TimeStamp)) %>%
+  group_by(Date, Fraud) %>%
+  summarise("number" = n(), .groups = 'drop') %>%
+  arrange(desc(number))
+
+head(date_transactions, 4)
+
+```
+
+### 2. Find the top 4 days with the greatest number of fraudulent transactions.
+
+1.  December 24, 2023 ( *336* )
+2.  December 31, 2023 ( *333* )
+3.  December 25, 2023 ( *323* )
+4.  January 1, 2023 ( *219* )
+
+------------------------------------------------------------------------
+
+### 3. Create a bar chart showing number of fraud transactions per month.
+
+```{r}
+
+by_month <- mutate(date_transactions, Month = lubridate::month(Date, label = TRUE)) %>%
+  group_by(Month) %>%
+  summarise("Fraud.Tally" = sum(number)) %>%
+  ggplot(aes(x = Month, y = Fraud.Tally)) +
+  geom_bar(stat="identity", fill = 'maroon')+
+  geom_text(aes(label=Fraud.Tally), vjust=1.6, color="white", size=3.5) +
+  ggtitle("Number of Fraud Transactions per Month")
+
+by_month
+```
+
+------------------------------------------------------------------------
+
+```{r}
+by_CardType <- select(transactions, CardType, Fraud) %>%
+  mutate(value = ifelse(Fraud == "Yes", 1, 0)) %>%
+  group_by(CardType) %>%
+  summarise("number" = n(), tally = sum(value)) %>%
+  mutate("P(fraud|CardType)" = tally/number)
+
+by_CardType
+
+```
+
+### 4. Which type of card is less prone to fraud: credit or debit cards?
+
+-   **P( fraud \| Credit )** = *0.001211453*
+
+-   **P( fraud \| Debit )** = *0.006179416*
+
+    Thus, **Credit cards are less prone to fraud**, since relative frequency of fraud in Credit cards is lower than in Debit cards.
+
+------------------------------------------------------------------------

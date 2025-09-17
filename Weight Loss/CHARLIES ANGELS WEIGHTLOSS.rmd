@@ -1,0 +1,122 @@
+---
+title: "Weight Loss"
+author: "Charlie's Angels"
+date: "2024-05-29"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+# A. Gym as a factor in Weight Loss
+
+Question #1: On the average, which Gym has individuals with higher weight loss?
+
+```{r}
+library(readr)
+library(dplyr)
+library(rstatix)
+library(tinytex)
+library(ggplot2)
+
+typediet <- c("A", "B", "C")
+typegym <- c("Pewter", "Cerulean")
+
+
+WEIGHTLOSS <- read_csv("WeightLoss.csv", 
+                       col_types = cols(Diet = col_factor(levels = typediet), 
+                                        Gym = col_factor(levels = typegym)
+                                       )
+                      )
+head(WEIGHTLOSS)
+```
+
+```{r}
+mean_gym <- WEIGHTLOSS %>%
+  group_by(Gym) %>%
+  summarize(mean_value = mean(WeightLoss, na.rm = TRUE))
+mean_gym
+```
+
+```{r}
+ggplot(WEIGHTLOSS, aes(x = Gym, y = WeightLoss, fill = Gym)) +
+  geom_boxplot() +
+  labs(title = "Weight Loss by Diet", x = "Gym", y = "Weight Lost (in kg)")
+```
+
+**Answer: On average, Pewter gym has individuals with higher weight loss**
+
+Question #2: At 0.05 level of significance, is there a difference in the average weight loss between the members of the two Gyms? Test for assumptions before performing the T test for means.
+
+```{r}
+library(rstatix)
+library(tidyverse)
+
+WL2 <- subset(WEIGHTLOSS, Gym %in% c("Pewter", "Cerulean"))|>
+  select(WeightLoss, Gym)|>
+  mutate(Gym = as.factor(Gym))
+WL2
+
+shapiro.test(WL2$WeightLoss)
+
+summary_gym <- WL2%>%
+  group_by(Gym)%>%
+  summarize(shapiro_test(WeightLoss))
+summary_gym
+```
+
+*The weight loss data from the 2 gyms follows a normal distribution since the p-values of the 2 gyms are greater than 0.05*
+
+```{r}
+t.test(WeightLoss ~ Gym, WL2,
+       var.equal = F,
+       alternative = "two.sided")
+```
+
+**Answer: At 0.05 level of significance, we have sufficient evidence to conclude that the average weight loss between the members of the 2 gyms are not equal**
+
+# B. Diet as a factor in Weight Loss
+
+Question #3: Obtain mean of WeightLoss per Diet. Which types of diet have greater mean weight loss than the overall mean weight loss? Which types of diet have less mean weight loss than the overall mean weight loss?
+
+```{r}
+mean_diet <- WEIGHTLOSS %>%
+  group_by(Diet) %>%
+  summarize(mean_diet = mean(WeightLoss))
+mean_diet
+
+OVmean <- WEIGHTLOSS %>% 
+          summarize(OVmean = mean(WeightLoss))
+OVmean
+```
+
+**Answer: Among the three diets, Diet B & C has greater mean than the overall mean weight loss. On the other hand, Diet A is the only diet that has less mean weight loss than the overall mean weight loss.**
+
+Question #4: Perform a one-way ANOVA of WeightLoss with the type of diet as the grouping variable. Check first if assumptions are met. Interpret the result.
+
+```{r}
+# Test for Normality
+WEIGHTLOSS %>% group_by(Diet) %>%
+  summarize(shapiro_test(WeightLoss))
+```
+
+*The third group has a p-value \< 0.05, violating the assumption of normality. We proceed with testing for homoscedasticity. We proceed to Levene's Test for Homoscedasticity*
+
+```{r}
+#Test for Homoscedasticity
+levene_test( WEIGHTLOSS, WeightLoss ~ Diet)
+```
+
+*Since the p-value is \> 0.05, we do not reject the null hypothesis. At 0.05 level of significance, we have sufficient evidence to conclude that the variances are equal.*
+
+We proceed with performing one-way ANOVA.
+
+```{r}
+anova_diet <- aov(WeightLoss ~ Diet, WEIGHTLOSS)
+summary(anova_diet)
+```
+
+**Answer: Since the p-value is \< 0.05, we reject the null hypothesis. At 0.05 level of significance, we have sufficient evidence to conclude that at least one of the means of the 3 diets is different from the rest.**

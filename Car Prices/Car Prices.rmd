@@ -1,0 +1,83 @@
+---
+title: "Car Prices"
+author: "Charlie's Angels"
+date: "2024-05-26"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r}
+knitr::opts_chunk$set(warning = FALSE, message = FALSE)
+```
+
+
+```{r}
+library(readr)
+library(readxl)
+library(dplyr)
+library(ggplot2)
+```
+
+```{r}
+carprice <- read_xlsx(path = "CAR PRICE.xlsx", sheet = "Data")
+head(carprice)
+```
+
+## A. Subset or “split” the carprice into 2 datasets:
+
+-   train: contains 150 randomly selected cars from the original dataset
+-   test: contains the other 55 not selected in the train set. Use 125 as your seed number
+
+```{r}
+set.seed(125)
+train_samp <- sample(nrow(carprice), 150)
+
+train <- carprice[train_samp,]
+test <- carprice[-train_samp,]
+
+head(train)
+head(test)
+```
+
+
+## B. Using the variables you selected in MP1, fit a multiple linear regression model using the train dataset.
+
+Store the lm class object to an object named model_1. Show results using summary(model_1).
+
+```{r}
+model_1 <- lm(price ~ enginesize + peakrpm + boreratio, data = train)
+summary(model_1)
+
+ggplot(train, aes(y = price, x = enginesize, color = peakrpm, fill = boreratio)) +
+  geom_point() +
+  geom_smooth(method = lm, se = F, color = 'orange') +
+  scale_color_viridis_b()+
+  theme_bw()
+```
+
+
+## C. Using model_1, predict the prices in the test dataset.
+
+Store the vector of predicted values in an object named fit_1.
+
+```{r}
+fit_1 <- predict(model_1, test)
+
+data_test <- data.frame("Actual price" = test$price, "Predicted price" = fit_1, "Residuals" = test$price - fit_1, "Residuals Squared" = (test$price - fit_1)^2 )
+head(data_test)
+```
+
+
+## D. In statistical modelling, the performance is evaluated using some accuracy metrics, such as the Root Mean Square Error (RMSE)
+
+```{r}
+
+rmse_manual <- sqrt(sum(data_test$Residuals.Squared)/nrow(data_test))
+rmse_manual
+
+rmse_fun <- Metrics::rmse(actual = test$price, predicted = fit_1)
+rmse_fun
+```
+
+**Root Mean Square Error = 203229.5**
